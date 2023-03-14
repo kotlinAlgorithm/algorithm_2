@@ -67,6 +67,7 @@ class PuyoPuyo_11559 {
             findBombColor(map)
             if (bombQueues.isEmpty()) return
             bombColor()
+            gravityPuyo()
             bombCount++
         }
     }
@@ -119,22 +120,24 @@ class PuyoPuyo_11559 {
             map[y][x] = Color.D
             downColumnSet.add(x)
         }
-        downColumnSet.map { col -> gravity(col) }
     }
 
-    private fun gravity(col: Int) {
-        var startRow = 12
-        while (true) {
-            val colorRow = findUpColorRow(startRow, col)
-            val notColorRow = findUpNotColorRow(startRow, col)
-            if (colorRow == -1) return
-            if (notColorRow == -1) return
-            if (notColorRow < colorRow) return
-            if (map[colorRow][col].isColor()) {
-                if (colorRow != notColorRow) {
-                    map[notColorRow][col] = map[colorRow][col]
-                    map[colorRow][col] = Color.D
-                    startRow = notColorRow - 1
+    private fun gravityPuyo() {
+        val line = BooleanArray(7)
+        Arrays.fill(line, false)
+        var height: Int
+        for (y in 12 downTo 1) {
+            for (x in 1..6) {
+                height = y
+                if (map[height][x] == Color.D && !line[x]) {
+                    for (h in height - 1 downTo 0) {
+                        if (map[h][x] != Color.D) {
+                            map[height][x] = map[h][x]
+                            map[h][x] = Color.D
+                            if (height >= 1) height--
+                        }
+                    }
+                    line[x] = true
                 }
             }
         }
