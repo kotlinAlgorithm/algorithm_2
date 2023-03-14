@@ -143,24 +143,6 @@ class PuyoPuyo_11559 {
         }
     }
 
-    private fun findUpNotColorRow(r: Int, col: Int): Int {
-        var row = r
-        while (row >= 1) {
-            if (!map[row][col].isColor()) return row
-            row--
-        }
-        return -1
-    }
-
-    private fun findUpColorRow(r: Int, col: Int): Int {
-        var row = r
-        while (row >= 1) {
-            if (map[row][col].isColor()) return row
-            row--
-        }
-        return -1
-    }
-
     private fun initMap() {
         for (i in 1..12) {
             val line = br.readLine().toCharArray()
