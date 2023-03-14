@@ -42,7 +42,7 @@ class `부대복귀` {
 
             for (nextNode in graph[node]) {
                 val nextDistance = accDistance + 1
-                if (distFromDest[nextNode] == -1 || nextDistance < distFromDest[nextNode]) {
+                if (distFromDest[nextNode] == -1) {
                     q.offer(State(nextNode, nextDistance))
                     distFromDest[nextNode] = nextDistance
                 }
