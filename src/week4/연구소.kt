@@ -2,7 +2,7 @@ package src.week4
 
 /**
  * https://www.acmicpc.net/problem/14502
- * 구현 + 완전 탐색, 절차가 많아서
+ * 구현 + 완전 탐색, 절차가 많아서 구현이 까다롭다
  */
 enum class Area {
     SPACE, WALL, VIRUS
@@ -25,9 +25,9 @@ private lateinit var visited: Array<BooleanArray>
 private var totalIndexCount = 0
 
 fun main() {
-    val (rowSize, colSize) = readln().split(" ").map(String::toInt)
+    val (rowSize, colSize) = readln().split(" ").map { it.toInt() }
     initialLab = Array(rowSize) {
-        readln().split(" ").map(String::toArea).toTypedArray()
+        readln().split(" ").map(String::toArea).toTypedArray(   )
     }
     lab = Array(rowSize) { row ->
         Array(colSize) { col ->
