@@ -1,15 +1,24 @@
 package src.week6
 
+/**
+ * https://www.acmicpc.net/problem/1914
+ * 재귀, DP, 큰 수 계산 사용
+ * DP로 풀었다. 다른 사람들의 코드를 살펴보니 원판 움직이는 개수 공식이 따로 있는 것 같다.
+ */
 import java.lang.StringBuilder
 import java.math.BigInteger
 
 private var circleCount = 0
 private var moveCount = 0
-private lateinit var moveCountTable: Array<BigInteger>
 private val moveProcess = StringBuilder()
+
+// 개수만 세는 로직용 메모이제이션 테이블
+// moveCountTable[i]: 원판 개수 i를 다른 장대로 옮길 때 원판이 이동하는 횟수
+private lateinit var moveCountTable: Array<BigInteger>
 
 fun main() {
     circleCount = readln().toInt()
+    // 원판이 20개 이하일 경우 재귀적으로 개수를 세면서 직접 원판을 옮긴다
     if (circleCount <= 20) {
         moveCircles(1, 2, 3, circleCount)
         println(moveCount)
@@ -17,6 +26,7 @@ fun main() {
             print(moveProcess.toString())
         }
     } else {
+        // 20개 초과일 경우 원판 옮기는 개수만 세는 로직 실행
         moveCountTable = Array(circleCount + 1) { BigInteger.ZERO }
         moveCountTable[1] = BigInteger.ONE
         countCircleMovement(circleCount).let { print(it) }
