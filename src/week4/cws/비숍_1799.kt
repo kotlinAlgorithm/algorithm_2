@@ -19,7 +19,7 @@ class Solution1799 {
         private var answer: Int = 0
         private val targetList = mutableListOf<Pair<Int, Int>>()
         private lateinit var map: Array<IntArray>
-        private lateinit var blocked: Array<BooleanArray>
+        private lateinit var blocked: Array<IntArray>
         private val dy = arrayOf(-1, -1, 1, 1)
         private val dx = arrayOf(-1, 1, -1, 1) // 왼위, 오위, 왼아, 왼아
     }
@@ -27,7 +27,7 @@ class Solution1799 {
     fun solution() {
         N = readln().toInt()
         map = Array(N) { IntArray(N) }
-        blocked = Array(N) { BooleanArray(N) }
+        blocked = Array(N) { IntArray(N) }
 
         for (y in 0 until N) {
             val st = StringTokenizer(readln())
@@ -52,7 +52,7 @@ class Solution1799 {
 
         for (target in index until MAX) {
             val (y, x) = targetList[target]
-            if (!blocked[y][x] && map[y][x] == 1) {
+            if (blocked[y][x] == 0 && map[y][x] == 1) {
                 map[y][x] = 2
                 val plusBlocked = setBlock(y, x)
                 dfs(index + 1, set + 1, block + plusBlocked)
@@ -72,8 +72,8 @@ class Solution1799 {
                 ny += dy[dir]
                 nx += dx[dir]
                 if (ny < 0 || nx < 0 || ny >= N || nx >= N) continue
-                if (map[ny][nx] == 1 && !blocked[ny][nx]) {
-                    blocked[ny][nx] = true
+                if (map[ny][nx] == 1) {
+                    blocked[ny][nx] += 1
                     count++
                 }
             }
@@ -89,7 +89,7 @@ class Solution1799 {
                 ny += dy[dir]
                 nx += dx[dir]
                 if (ny < 0 || nx < 0 || ny >= N || nx >= N) continue
-                blocked[ny][nx] = false
+                blocked[ny][nx] -= 1
             }
         }
     }
